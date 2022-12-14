@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -28,6 +29,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen'
 import RootNavigation from './src/navigation'
+import { Provider } from 'react-redux'
+import { store } from './src/redux/store'
 
 const Section: React.FC<
   PropsWithChildren<{
@@ -35,29 +38,35 @@ const Section: React.FC<
   }>
 > = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark'
+  console.log('test')
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-            color: isDarkMode ? (Colors.white as string) : (Colors.black as string),
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <>
+    
+     
+      <View style={styles.sectionContainer}>
+        <Text
+          style={[
+            styles.sectionTitle,
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+              color: isDarkMode ? (Colors.white as string) : (Colors.black as string),
+            },
+          ]}>
+          {title}
+        </Text>
+        <Text
+          style={[
+            styles.sectionDescription,
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+              color: isDarkMode ? Colors.light : Colors.dark,
+            },
+          ]}>
+          {children}
+        </Text>
+      </View>
+     
+    </>
   )
 }
 
@@ -76,6 +85,7 @@ function HomeScreen() {
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Home Screen</Text>
     </View>
+    
   )
 }
 
@@ -89,7 +99,9 @@ function App() {
     //     <Stack.Screen name="Home" component={HomeScreen} />
     //   </Stack.Navigator>
     // </NavigationContainer>
-    <RootNavigation />
+    <Provider store={store}>
+      <RootNavigation />
+    </Provider>
   )
 }
 const styles = StyleSheet.create({

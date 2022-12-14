@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import {View, Text} from 'react-native'
 import React from 'react'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import Home from '../screens/Home'
@@ -39,9 +37,7 @@ export default function Tabs() {
         name="Notification"
         component={Favorite}
         options={{
-          tabBarIcon: ({size, color}) => (
-            <IonIcon name="notification-sharp" size={size} color={color} />
-          ),
+          tabBarIcon: ({size, color}) => <IonIcon name="alarm-sharp" size={size} color={color} />,
         }}
       />
       <Tab.Screen
