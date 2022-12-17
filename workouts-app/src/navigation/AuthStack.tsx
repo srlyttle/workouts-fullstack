@@ -17,7 +17,7 @@ export default function AuthStack() {
     <Stack.Navigator initialRouteName="Tabs">
       <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="Tabs" component={Tabs} />
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Login" options={{headerLeft: () => null}} component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="ExerciseList" component={ExerciseList} />

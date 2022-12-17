@@ -1,13 +1,5 @@
-/* eslint-disable prettier/prettier */
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
+import {persistReducer} from 'redux-persist'
+import {PersistGate} from 'redux-persist/integration/react'
 
 import {NavigationContainer} from '@react-navigation/native'
 import React, {type PropsWithChildren} from 'react'
@@ -29,8 +21,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen'
 import RootNavigation from './src/navigation'
-import { Provider } from 'react-redux'
-import { store } from './src/redux/store'
+import {Provider} from 'react-redux'
+import {persistor, store} from './src/redux/store'
 
 const Section: React.FC<
   PropsWithChildren<{
@@ -41,8 +33,6 @@ const Section: React.FC<
   console.log('test')
   return (
     <>
-    
-     
       <View style={styles.sectionContainer}>
         <Text
           style={[
@@ -65,7 +55,6 @@ const Section: React.FC<
           {children}
         </Text>
       </View>
-     
     </>
   )
 }
@@ -85,7 +74,6 @@ function HomeScreen() {
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Home Screen</Text>
     </View>
-    
   )
 }
 
@@ -100,7 +88,9 @@ function App() {
     //   </Stack.Navigator>
     // </NavigationContainer>
     <Provider store={store}>
-      <RootNavigation />
+      <PersistGate loading={null} persistor={persistor}>
+        <RootNavigation />
+      </PersistGate>
     </Provider>
   )
 }
