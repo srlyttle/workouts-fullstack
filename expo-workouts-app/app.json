@@ -29,6 +29,12 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a576eecb-9d60-4605-8ed0-8d5835ff5eba"
+      }
+    },
+    "owner": "srlyttle"
   }
 }
