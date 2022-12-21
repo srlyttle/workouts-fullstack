@@ -1,23 +1,24 @@
-import { View, Text, TextInput, Button, ScrollView } from 'react-native'
+import {View, Text, TextInput, Button, ScrollView, FlatList} from 'react-native'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { useGetPokemonByNameQuery } from '../../redux/middlewear/api'
+import {useSelector} from 'react-redux'
+import {useGetWorkoutsQuery} from '../../redux/middlewear/api'
 import NumericInput from 'react-native-numeric-input'
-import { styles } from './styles'
+import {styles} from './styles'
 import Card from '../../components/Card'
-import { Workout } from '../../types'
-import { ExerciseWorkout } from '../../components/Workout'
+import {Workout} from '../../types'
+import {ExerciseWorkout} from '../../components/Workout'
 
 export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const splits = useSelector((state) => state)
+  const splits = useSelector(state => state)
   console.log('state', splits)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, error, isLoading } = useGetPokemonByNameQuery('ditto')
-  console.log('data?.species', data?.species)
+
+  const {data: workoutData, isLoading} = useGetWorkoutsQuery('simon')
+
+  console.log('workoutData', workoutData)
 
   console.log('isLoading', isLoading)
-  // console.log('qu', data.species.name)
 
   const sets = [
     {
@@ -37,13 +38,15 @@ export default function Home() {
     },
   ]
   const workouts: Workout[] = [
-    { exerciseName: 'Pull Up', sets },
-    { exerciseName: 'Chin Up', sets },
-    { exerciseName: 'Arnold Dubmell Press', sets },
-    { exerciseName: 'Flat Dumbell Bench Press', sets },
+    {exerciseName: 'Pull Up', sets},
+    {exerciseName: 'Chin Up', sets},
+    {exerciseName: 'Arnold Dubmell Press', sets},
+    {exerciseName: 'Flat Dumbell Bench Press', sets},
   ]
+
+  const workoutItems = workoutData?.workouts || workouts
   return (
-    <ScrollView>
+    <View>
       <View
         style={{
           backgroundColor: 'black',
@@ -54,13 +57,14 @@ export default function Home() {
           minHeight: 40,
         }}
       >
-        <Text style={{ color: 'white', fontWeight: 'bold' }}>
-          THURSDAY, DECEMBER 15
-        </Text>
+        <Text style={{color: 'white', fontWeight: 'bold'}}>THURSDAY, DECEMBER 15</Text>
       </View>
-      {workouts.map((workout) => (
-        <ExerciseWorkout workout={workout} />
-      ))}
-    </ScrollView>
+
+      <FlatList
+        data={workoutItems}
+        renderItem={({item}) => <ExerciseWorkout workout={item} />}
+        keyExtractor={item => item.exerciseName}
+      />
+    </View>
   )
 }

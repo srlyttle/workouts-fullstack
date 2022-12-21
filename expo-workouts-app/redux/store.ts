@@ -1,4 +1,4 @@
-import { AnyAction, combineReducers, configureStore } from '@reduxjs/toolkit'
+import {AnyAction, combineReducers, configureStore} from '@reduxjs/toolkit'
 import splitsListReducer from '../screens/Split-List/SplitList.slice'
 import onboardingReducer from '../screens/Onboarding/Onboarding.slice'
 
@@ -15,8 +15,8 @@ import {
   REGISTER,
   REHYDRATE,
 } from 'reduxjs-toolkit-persist'
-import { pokemonApi } from './middlewear/api'
-import { setupListeners } from '@reduxjs/toolkit/dist/query'
+import {workoutsApi} from './middlewear/api'
+import {setupListeners} from '@reduxjs/toolkit/dist/query'
 
 const asyncStorageKey = 'workoutsApp'
 
@@ -35,7 +35,7 @@ const persistConfig = {
 const reducers = combineReducers({
   splits: splitsListReducer,
   onboarding: onboardingReducer,
-  [pokemonApi.reducerPath]: pokemonApi.reducer,
+  [workoutsApi.reducerPath]: workoutsApi.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)
@@ -58,14 +58,14 @@ const persistedReducer = persistReducer(persistConfig, reducers)
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         warnAfter: 128,
       },
-      immutableCheck: { warnAfter: 128 },
-    }).concat(pokemonApi.middleware),
+      immutableCheck: {warnAfter: 128},
+    }).concat(workoutsApi.middleware),
 })
 setupListeners(store.dispatch)
 export const persistor = persistStore(store)
