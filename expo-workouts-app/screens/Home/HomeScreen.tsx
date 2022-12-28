@@ -44,7 +44,7 @@ export default function Home() {
     {exerciseName: 'Flat Dumbell Bench Press', sets},
   ]
 
-  const workoutItems = workoutData?.workouts || workouts
+  const workoutItems = workoutData?.workouts
   return (
     <View>
       <View

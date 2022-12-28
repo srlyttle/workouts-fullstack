@@ -1,12 +1,22 @@
 import mongoose, { ConnectOptions } from 'mongoose'
 import config from 'config'
+import logger from './logger'
 
-export const connectDB = async () => {
+// supress warning
+mongoose.set('strictQuery', true)
+
+function connect() {
   const dbUri = config.get<string>('dbUri')
-  const conn = await mongoose.connect(dbUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  } as ConnectOptions)
-
-  console.log(` db now connected on ${conn.connection.host}`)
+  return mongoose
+    .connect(dbUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as ConnectOptions)
+    .then((conn) => logger.info(` db now connected on ${conn.connection.host}`))
+    .catch((err) => {
+      logger.error(`error connecting to DB`)
+      process.exit(1)
+    })
 }
+
+export default connect

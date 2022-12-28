@@ -8,3 +8,6 @@ export const handleGetWorkouts = (
 ) => {
   res.json({ workouts })
 }
+
+export const handleHealthCheck = (req: Request, res: Response) =>
+  res.sendStatus(200)

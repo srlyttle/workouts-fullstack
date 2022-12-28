@@ -1,13 +1,14 @@
 import express from 'express'
-import * as dotenv from 'dotenv'
-import { connectDB } from './utils/connect'
+import dotenv from 'dotenv'
+dotenv.config()
+import connectDB from './utils/connect'
 import cors from 'cors'
 import routes from './routes'
 import helmet from 'helmet'
 import config from 'config'
+import logger from './utils/logger'
+import deserializeUser from './middlewear/deserializeUser'
 
-dotenv.config()
-connectDB()
 const app = express()
 
 const allowedOrigins = '*'
@@ -19,6 +20,7 @@ const options: cors.CorsOptions = {
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+app.use(deserializeUser)
 app.use(express.urlencoded({ extended: false }))
 
 routes(app)
@@ -44,4 +46,7 @@ routes(app)
 
 // const port = process.env.PORT || 4000
 const port = config.get<number>('port')
-app.listen(port, () => console.log(`Listening on port ${port}`))
+app.listen(port, () => {
+  logger.info(`Listening on port ${port}`)
+  connectDB()
+})

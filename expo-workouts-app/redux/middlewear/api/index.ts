@@ -6,7 +6,7 @@ import {Workout} from '../../../types'
 export const workoutsApi = createApi({
   reducerPath: 'workoutsApi',
   // baseQuery: fetchBaseQuery({baseUrl: 'https://pokeapi.co/api/v2/'}),
-  baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:4000/'}),
+  baseQuery: fetchBaseQuery({baseUrl: 'https://rest-api.bestsoftwarereviews.co.uk/'}),
   endpoints: builder => ({
     // getPokemonByName: builder.query<{species: {name: string}}, string>({
     //   query: name => `pokemon/${name}`,
